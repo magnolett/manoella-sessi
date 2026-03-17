@@ -1,14 +1,14 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Menu, X, Phone, MessageCircle } from 'lucide-react'
+import { Menu, X, CalendarDays } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const navItems = [
   { name: 'Início', href: '#inicio' },
+  { name: 'Atendimentos', href: '#atendimentos' },
   { name: 'Sobre', href: '#sobre' },
-  { name: 'Especialidades', href: '#especialidades' },
-  { name: 'Serviços', href: '#servicos' },
+  { name: 'Como funciona', href: '#como-funciona' },
   { name: 'Contato', href: '#contato' },
 ]
 
@@ -25,42 +25,43 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const handleWhatsApp = () => {
-    const message = encodeURIComponent('Olá! Gostaria de agendar uma consulta fonoaudiológica.')
-    window.open(`https://wa.me/5548984920928?text=${message}`, '_blank')
-  }
+  const closeMenu = () => setIsMenuOpen(false)
 
   return (
     <header
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+        'fixed top-0 left-0 right-0 z-50 border-b border-borderMuted transition-all duration-300',
         isScrolled
-          ? 'bg-white shadow-xl border-b border-gray-200'
-          : 'bg-white/95 backdrop-blur-md shadow-lg'
+          ? 'bg-surface/95 backdrop-blur-md shadow-[0_18px_45px_rgba(0,0,0,0.05)]'
+          : 'bg-surface/90 backdrop-blur-md'
       )}
     >
-      <div className="container mx-auto px-4 py-4">
+      <div className="page-container py-7">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-primary-500 rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-lg">M</span>
-            </div>
+          <div className="flex items-center">
+            <img
+              src="/logo-manoella.png"
+              alt="Logo Manoella Sessi"
+              className="h-12 w-auto mr-[14px]"
+            />
             <div>
-              <h1 className="text-xl font-bold text-gray-800">
-                Manoella Sessi
-              </h1>
-              <p className="text-sm text-gray-600">Cuidando da sua comunicação</p>
+              <p className="font-serif text-sm md:text-base tracking-tight text-text">
+                Manoella Gabriel Sessi
+              </p>
+              <p className="text-xs text-text/70">
+                Fonoaudióloga · Atendimento online
+              </p>
             </div>
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden md:flex items-center gap-7">
             {navItems.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
-                className="text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium"
+                className="text-sm text-text/80 hover:text-text transition-colors"
               >
                 {item.name}
               </a>
@@ -68,27 +69,18 @@ export default function Header() {
           </nav>
 
           {/* CTA Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
-            <button
-              onClick={handleWhatsApp}
-              className="flex items-center space-x-2 bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-lg transition-colors duration-200 shadow-lg"
-            >
-              <MessageCircle size={18} />
-              <span>WhatsApp</span>
-            </button>
-            <a
-              href="tel:+5548984920928"
-              className="flex items-center space-x-2 text-gray-700 hover:text-primary-600 transition-colors duration-200"
-            >
-              <Phone size={18} />
-              <span>(48) 98492-0928</span>
+          <div className="hidden md:flex items-center">
+            <a href="#agendamento" className="btn btn-primary">
+              <CalendarDays size={18} />
+              Agendar consulta
             </a>
           </div>
 
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden text-gray-700"
+            className="md:hidden text-text/80"
+            aria-label={isMenuOpen ? 'Fechar menu' : 'Abrir menu'}
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -96,32 +88,22 @@ export default function Header() {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden mt-4 bg-white/95 backdrop-blur-md rounded-lg p-4">
-            <nav className="flex flex-col space-y-4">
+          <div className="md:hidden mt-4 card p-4">
+            <nav className="flex flex-col space-y-3">
               {navItems.map((item) => (
                 <a
                   key={item.name}
                   href={item.href}
-                  className="text-gray-800 hover:text-primary-600 transition-colors duration-200 font-medium"
-                  onClick={() => setIsMenuOpen(false)}
+                  className="text-sm text-text/80 hover:text-text transition-colors py-2"
+                  onClick={closeMenu}
                 >
                   {item.name}
                 </a>
               ))}
-              <div className="pt-4 border-t border-gray-200">
-                <button
-                  onClick={handleWhatsApp}
-                  className="w-full flex items-center justify-center space-x-2 bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-lg transition-colors duration-200"
-                >
-                  <MessageCircle size={18} />
-                  <span>WhatsApp</span>
-                </button>
-                <a
-                  href="tel:+5548984920928"
-                  className="w-full flex items-center justify-center space-x-2 text-primary-600 hover:text-primary-700 mt-2 transition-colors duration-200"
-                >
-                  <Phone size={18} />
-                  <span>(48) 98492-0928</span>
+              <div className="pt-4 border-t border-black/10">
+                <a href="#agendamento" className="btn btn-primary w-full" onClick={closeMenu}>
+                  <CalendarDays size={18} />
+                  Agendar consulta
                 </a>
               </div>
             </nav>

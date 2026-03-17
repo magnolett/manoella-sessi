@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -9,34 +8,84 @@
   }
   
   body {
-    font-family: 'Inter', system-ui, sans-serif;
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    background: theme(colors.background);
+    background-image:
+      radial-gradient(#00000006 1px, transparent 1px),
+      radial-gradient(1200px 700px at 20% 0%, rgba(214, 180, 175, 0.14), transparent 55%),
+      radial-gradient(900px 600px at 85% 10%, rgba(168, 184, 165, 0.12), transparent 60%);
+    background-size: 40px 40px, auto, auto;
+    color: theme(colors.text);
     min-height: 100vh;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
 @layer components {
-  .gradient-text {
-    @apply bg-gradient-to-r from-primary-600 to-primary-800 bg-clip-text text-transparent;
+  .hero {
+    padding-top: 120px;
+    padding-bottom: 120px;
   }
-  
-  .card-gradient {
-    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+
+  .hero-text > * + * {
+    margin-top: 20px;
   }
-  
-  .hero-gradient {
-    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+
+  .hero-subtitle {
+    letter-spacing: 2px;
+    font-size: 12px;
+    text-transform: uppercase;
   }
-  
-  .specialty-gradient {
-    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+
+  .page-container {
+    @apply mx-auto w-full max-w-[1100px] px-6;
   }
-  
-  .accent-gradient {
-    background: linear-gradient(135deg, #fde047 0%, #eab308 100%);
+
+  .section {
+    @apply py-20 md:py-28;
   }
-  
-  .section-bg {
-    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+
+  .section-title {
+    @apply font-serif text-3xl md:text-4xl tracking-tight;
+  }
+
+  .section-kicker {
+    @apply text-xs tracking-[0.24em] uppercase text-[rgba(63,63,63,0.65)];
+  }
+
+  .card {
+    @apply rounded-[16px] bg-surface shadow-[0_10px_30px_rgba(0,0,0,0.05)] border border-[rgba(239,234,231,0.9)];
+    transition: all 0.25s ease;
+    will-change: transform, box-shadow;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-medium transition;
+  }
+
+  .btn-primary {
+    @apply bg-button text-white shadow-[0_10px_24px_rgba(207,167,162,0.35)] hover:bg-buttonHover hover:shadow-[0_14px_30px_rgba(184,144,139,0.35)] active:brightness-95;
+  }
+
+  .btn-secondary {
+    @apply bg-surface text-text shadow-[0_8px_20px_rgba(0,0,0,0.04)] ring-1 ring-borderMuted hover:bg-white hover:shadow-[0_10px_24px_rgba(0,0,0,0.06)];
+  }
+
+  .anchor {
+    scroll-margin-top: 96px;
+  }
+
+  .section-divider {
+    width: 60px;
+    height: 2px;
+    background: theme(colors.accent);
+    margin: 24px 0;
+    border-radius: 2px;
   }
 }
